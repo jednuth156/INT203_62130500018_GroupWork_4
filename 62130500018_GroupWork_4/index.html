@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Vue Js - HelloWorld App</title>
+
+  <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+  <!-- Using via Google Web Fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- https://tailwindcss.com/docs/installation -->
+  <!-- Using Tailwind via CDN -->
+  <link href="https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css" rel="stylesheet" />
+
+  <link href="styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+  <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+  <!-- Vue CDN -->
+  <script src="https://unpkg.com/vue@next"></script>
+
+</head>
+
+<body>
+    <div>
+  <div id="app" class="container my-10  flex-col">
+    <div >
+        <h1 class="text-xl text-center">Animal Gallery ( {{countUndone}} )</h1>
+        <div class="flex justify-center py-4">
+        <span :class="{'hidden' : form.search }"><i class="fas fa-search" @click="search"></i></span>
+        <span :class="{'hidden' : !form.search}">
+            <input class="px-2 border-2 border-black mx-2 " placeholder="Please enter text"
+                v-model="form.text">
+            <button class="mx-2 rouned text-white px-4 py-2 bg-blue-500" @click="cancel">Cancle</button>
+        </span>
+    </div>
+    </div>
+    <div class="relative h-56 sm:w-1/2 sm:h-auto">
+            
+    </div> 
+    <div class="w-48 m-auto" v-if="searching.length !== 0">
+        <ul>
+            <li v-for="(image,index) in searching" :class="{done: image.done}" 
+                class="border-blue-100 bg-gray-100 rounded-2xl mt-10 rounded-t-none ">
+                <img v-bind:src="image.url" class="rounded-2xl rounded-t-none" v-on:click="toggleView(image)" >
+                {{image.title}}
+                <p class="py-2">
+                    <i v-show="!image.done " class="text-black transition duration-500 far fa-2x fa-heart  " @click="toggleDone(image)"></i>
+                    <i v-show="image.done " class="text-red-500 transition duration-500 fas fa-2x fa-heart " @click="toggleDone(image)"></i>
+                </p>
+            </li>
+            
+        </ul>
+    </div>
+    <div v-else class="mt-10 bg-white shadow-lg rounded w-full mx-auto px-auto py-5 flex justify-center">
+        <h2 class="mb-2 text-2xl font-bold text-gray-800">No Photos.</h2>
+    </div>
+    <div v-show="hasView" class="fixed top-0 flex justify-center w-screen h-screen bg-black ">
+        <div class="h-screen m-6 ">
+            <i class="flex-row-reverse text-white cursor-pointer far fa-2x fa-times-circle" @click="close"></i>
+            <img :src="viewImg" class="m-6 border border-4 border-white h-5/6">
+        </div>
+    </div>
+</div>
+</div>
+  <!-- my main.js -->
+  <script src="./main.js"></script>
+</body>
+
+</html>
